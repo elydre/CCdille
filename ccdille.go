@@ -9,9 +9,14 @@ import (
 
 type tokenType struct {
 	tType string
-	intValue int
 	stringValue string
 }
+
+/****************************
+ *                         *
+ *  Tokenizer              *
+ *                         *
+****************************/
 
 func str_split(s string) []string {
 	var result []string
@@ -51,33 +56,40 @@ func tokenize(s string) []tokenType {
 	stringList := str_split(s)
 
 	for _, str := range stringList {
-		val, err := strconv.Atoi(str)
-
-		if err == nil {
-			result = append(result, tokenType{"int", val, ""})
+		
+		if _, err := strconv.Atoi(str); err == nil {
+			result = append(result, tokenType{"int", str})
 		} else if strings.ContainsAny(str, "+-*/") {
-			result = append(result, tokenType{"operator", 0, str})
+			result = append(result, tokenType{"operator", str})
 		} else if strings.ContainsAny(str, "()") {
-			result = append(result, tokenType{"paren", 0, str})
+			result = append(result, tokenType{"paren", str})
 		} else if str == ";" {
-			result = append(result, tokenType{"scolon", 0, str})
+			result = append(result, tokenType{"scolon", str})
 		} else {
-			result = append(result, tokenType{"string", 0, str})
+			result = append(result, tokenType{"string", str})
 		}
 	}
 
 	return result
 }
 
+
 func printToken(t tokenType) {
-	fmt.Print(t.tType, "\t")
-	if t.tType == "int" {
-		fmt.Print(t.intValue)
-	} else {
-		fmt.Print(t.stringValue)
-	}
-	fmt.Println()
+	fmt.Println(t.tType, "\t", t.stringValue)
 }
+
+/****************************
+ *                         *
+ *  Parser                 *
+ *                         *
+****************************/
+
+/****************************
+ *                         *
+ *  Main                   *
+ *                         *
+****************************/
+
 
 func read_file(file string) string {
 	f, err := os.Open(file)
