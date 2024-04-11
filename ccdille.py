@@ -7,6 +7,10 @@ def read_file(filename):
     except FileNotFoundError:
         return None
 
+def fatal_error(message):
+    print('Fatal error:', message)
+    exit()
+
 def lex(text):
     words = []
     word_start = 0
@@ -75,17 +79,44 @@ def lex(text):
 
     return words
 
-class AST:
-    def __init__(self, type, name, parms, body):
-        self.type = type
-        self.name = name
-        self.parms = parms
-        self.body = body
+def to_asts(words, level=0):
+    asts = []
+
+    i = 0
+    while i < len(words):
+        type, value = words[i]
+        if type == 'punct' and value == '(':
+            ast = []
+            i += 1
+            while i < len(words) and words[i][1] != ')':
+                if words[i][1] == '(':
+                    tmp, a = to_asts(words[i:], level+1)
+                    ast.append(tmp)
+                    i += a - 1
+                else:
+                    ast.append(words[i])
+                i += 1
+            if i == len(words):
+                fatal_error('Unmatched (')
+            asts.append(ast)
+        elif type == 'punct' and value == ')':
+            if level > 0:
+                return (asts[0], i)
+            fatal_error('Unmatched )')
+        else:
+            asts.append(words[i])
+        i += 1
     
-    def __repr__(self):
-        return f'{self.type} {self.name} {self.parms} {self.body}'
+    return asts
 
-
+def print_asts(asts, level=0):
+    if len(asts) == 0:
+        print('  ' * level, '()')
+    for ast in asts:
+        if isinstance(ast, list):
+            print_asts(ast, level+1)
+        else:
+            print('  ' * level, ast)
 
 text = read_file('test.cdy')
 if text is None:
@@ -93,4 +124,5 @@ if text is None:
     exit()
     
 words = lex(text)
-pprint(words)
+asts = to_asts(words)
+print_asts(asts)

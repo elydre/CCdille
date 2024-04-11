@@ -1,4 +1,4 @@
 int main(void) {
-    printf("hi!\n");
+    printf("hi %d\n", test( ));
     return 0;
 }
