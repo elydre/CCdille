@@ -1,4 +1,3 @@
-int main(void) {
-    printf("hi %d\n", test( ));
-    return 0;
+func test(int oui) int {
+    func salut(void) void;
 }

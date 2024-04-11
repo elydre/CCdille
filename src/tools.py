@@ -1,3 +1,5 @@
+import traceback
+
 def read_file(filename):
     try:
         with open(filename, "r") as f:
@@ -7,4 +9,5 @@ def read_file(filename):
 
 def fatal_error(message):
     print("Fatal error:", message)
-    exit()
+    traceback.print_stack()
+    exit(1)

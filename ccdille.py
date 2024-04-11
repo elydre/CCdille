@@ -1,6 +1,6 @@
 from src.tools import read_file, fatal_error
 
-import src.parser as parse
+import src.parser as parser
 import src.lexer as lexer
 import src.ast as ast
 
@@ -13,3 +13,4 @@ if text is None:
 words = lexer.lex(text)
 asts = ast.to_asts(words)
 ast.print_asts(asts)
+pprint(parser.parse(asts))
