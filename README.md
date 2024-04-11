@@ -22,3 +22,4 @@ here is a small list of items that could be supported in the future:
 ### Fun Stuff
 - [ ] Default arguments
 - [ ] JIT compilation ?
+- [ ] Compiler in Ç itself
