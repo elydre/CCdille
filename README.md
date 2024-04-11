@@ -1,2 +1,2 @@
 # CCdille
-Ç compiler in go-lang
+Ç compiler in python
