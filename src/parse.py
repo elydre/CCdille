@@ -1,23 +1,5 @@
 from src.tools import fatal_error
 
-"""
- ("name", "func")
- ("name", "main")
-   ("name", "void")
- ("name", "int")
- ("punct", "{")
- ("name", "printf")
-   ("string", ""hi %d\\n"")
-   ("punct", ",")
-   ("name", "test")
-     ()
- ("punct", ";")
- ("name", "return")
- ("number", "0")
- ("punct", ";")
- ("punct", "}")
-"""
-
 def parse_func(asts):
     if len(asts) < 4:
         fatal_error(f"Unexpected end of asts {asts}")
